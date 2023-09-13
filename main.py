@@ -11,10 +11,110 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+# #ALGORITMO---------------------------------------
+# #dicionário
+# algoritmos_respostas = {
+#     'marcusnascimento': {
+#         'algoritmo': 'Crie um algoritmo que dada a entrada “AdrianoArturAugustoKevinMichelMarcusFabricioSamuel” como string, retorne o tamanho da string, subtraído pelo número de vogais.',
+#         'resposta_correta': '27',
+#     },
+#     'michelmachado': {
+#         'algoritmo': ' Faça um algoritmo que troque as letras dessa string “gespamlindo” pela respectiva posição do alfabeto, ex (a = 1, b = 2, c = 3, d = 4…….).',
+#         'resposta_correta': '75191611312914415',
+#     },
+#     'fabricio_05': {
+#         'algoritmo': 'Faça um algoritmo que troque o números dessa string, “13 9 3 8 5 12 7 1 20 1 15”, pelas letras correspondentes por cada posição no alfabeto, remova os espaços em branco para a resposta final.',
+#         'resposta_correta': 'michelgatao',
+#     },
+#     'kevinbrissow': {
+#         'algoritmo': 'Faça um algoritmo que, dado o nome dos 8 integrantes do Tecnouri, calcule o número secreto. Para descobrir o número secreto basta somar 46 se o nome termina com vogal, caso contrário some 34.',
+#         'resposta_correta': '308',
+#     },
+#     'arturmeneghini': {
+#         'algoritmo': 'Crie um algoritmo que dado o nomes dos 8 integrantes do Tecnouri, retorne o menor nome e o maior, desssa forma “nomemenor/nomemaior”, se o resultado não for único de um dos dois nomes não for único, a pessoa com ordem alfabética prevalece para a resposta (tudo minúsculo os nomes e em acento)',
+#         'resposta_correta': 'artur/fabricio',
+#     },
+#     'adrianoreidel': {
+#         'algoritmo': 'Dado o nome "maicol" retorne a sua característica mais marcante...',
+#         'resposta_correta': 'careca',
+#     },
+# }
+
+# @bot.command()
+# async def iniciar_desafio(ctx, nome: str):
+#     """
+#     !iniciar_desafio nome_do_usuário_do_discord
+#     """
+
+#     user_id = ctx.author.id
+#     user_name = ctx.author.name
+    
+#     member_names = {
+#                 'marcusnascimento': 'Marquinhos',
+#                 'michelmachado': 'Michas',
+#                 'fabricio_05': 'Fafa',
+#                 'kevinbrissow': 'Kevinnn',
+#                 'arturmeneghini': 'Arturo',
+#                 'adrianoreidel': 'Adriano rei delas',
+#             }
+#     if nome in member_names:
+#         try:
+#             user = await bot.fetch_user(user_id)
+#             if user:
+#                 if nome == 'marcusnascimento':
+#                     await user.send("Crie um algoritmo que dada a entrada “AdrianoArturAugustoKevinMichelMarcusFabricioSamuel” como string, retorne o tamanho da string, subtraído pelo número de vogais.")
+#                 elif nome == 'michelmachado':
+#                     await user.send("Faça um algoritmo que troque as letras dessa string “gespamlindo” pela respectiva posição do alfabeto, ex (a = 1, b = 2, c = 3, d = 4…….).")
+#                 elif nome == 'fabricio_05':
+#                     await user.send("Faça um algoritmo que troque o números dessa string, “13 9 3 8 5 12 7 1 20 1 15”, pelas letras correspondentes por cada posição no alfabeto, remova os espaços em branco para a resposta final.")
+#                 elif nome == 'kevinbrissow':
+#                     await user.send("Faça um algoritmo que, dado o nome dos 8 integrantes do Tecnouri, calcule o número secreto. Para descobrir o número secreto basta somar 46 se o nome termina com vogal, caso contrário some 34.")
+#                 elif nome == 'arturmeneghini':
+#                     await user.send("Crie um algoritmo que dado o nomes dos 8 integrantes do Tecnouri, retorne o menor nome e o maior, desssa forma “nomemenor/nomemaior”, se o resultado não for único de um dos dois nomes não for único, a pessoa com ordem alfabética prevalece para a resposta (tudo minúsculo os nomes e em acento)")
+#                 elif nome == 'adrianoreidel':
+#                     await user.send("Dado o nome 'maicol' retorne a sua característica mais marcante...")
+#                 await ctx.send(f"Desafio iniciado para {member_names[nome]}. Verifique sua DM para o algoritmo.")
+#         except Exception as e:
+#             await ctx.send(f"Erro ao iniciar o desafio: {e}")
+#     else:
+#         await ctx.send("Nome de usuário não reconhecido. Certifique-se de usar um nome válido.")
+
+# @bot.command()
+# async def inserir_resposta(ctx, resposta: str):
+#     """
+#     !inserir_resposta resposta
+#     """
+#     user_id = ctx.author.id
+#     user_name = ctx.author.name
+#     user = await bot.fetch_user(user_id)
+#     if user_name in algoritmos_respostas:
+#         algoritmo_usuario = algoritmos_respostas[user_name]['algoritmo']
+#         resposta_correta = algoritmos_respostas[user_name]['resposta_correta']
+        
+#         if resposta == resposta_correta:
+#             await user.send("Resposta correta! Você desbloqueou algo:")
+#             if (user_name == 'marcusnascimento'):
+#                 await user.send("1- https:")
+#             elif user_name == 'michelmachado':
+#                 await user.send("2- //qrco")
+#             elif user_name == 'fabricio_05':
+#                 await user.send("3- .de")
+#             elif user_name == 'kevinbrissow':
+#                 await user.send("4- /be")
+#             elif user_name == 'arturmeneghini':
+#                 await user.send("5- L")
+#             elif user_name == 'adrianoreidel':
+#                 await user.send("6- 52d")
+#         else:
+#             await user.send("Resposta incorreta. Tente novamente.")
+#     else:
+#         await ctx.send("Usuário não encontrado na lista de membros com algoritmos/respostas.")
+
+
+#LEMBRETES---------------------------------------
 lembretes = []
 numbers_generated = set()
 
-#LEMBRETES---------------------------------------
 @bot.command()
 async def lembrete(ctx, data, hora, evento):
     """
@@ -86,105 +186,6 @@ async def send_message(channel_id, message):
         print("Mensagem enviada")
     else:
         print("Canal não encontrado")
-
-#ALGORITMO---------------------------------------
-#dicionário
-algoritmos_respostas = {
-    'marcusnascimento': {
-        'algoritmo': 'Crie um algoritmo que dada a entrada “AdrianoArturAugustoKevinMichelMarcusFabricioSamuel” como string, retorne o tamanho da string, subtraído pelo número de vogais.',
-        'resposta_correta': '75191611312914415',
-    },
-    'michelmachado': {
-        'algoritmo': ' Faça um algoritmo que troque as letras dessa string “gespamlindo” pela respectiva posição do alfabeto, ex (a = 1, b = 2, c = 3, d = 4…….).',
-        'resposta_correta': '75191611312914415',
-    },
-    'fabricio_05': {
-        'algoritmo': 'Faça um algoritmo que troque o números dessa string, “13 9 3 8 5 12 7 1 20 1 15”, pelas letras correspondentes por cada posição no alfabeto, remova os espaços em branco para a resposta final.',
-        'resposta_correta': 'michelgatao',
-    },
-    'kevinbrissow': {
-        'algoritmo': 'Faça um algoritmo que, dado o nome dos 8 integrantes do Tecnouri, calcule o número secreto. Para descobrir o número secreto basta somar 46 se o nome termina com vogal, caso contrário some 34.',
-        'resposta_correta': '308',
-    },
-    'arturmeneghini': {
-        'algoritmo': 'Crie um algoritmo que dado o nomes dos 8 integrantes do Tecnouri, retorne o menor nome e o maior, desssa forma “nomemenor/nomemaior”, se o resultado não for único de um dos dois nomes não for único, a pessoa com ordem alfabética prevalece para a resposta (tudo minúsculo os nomes e em acento)',
-        'resposta_correta': 'artur/fabricio',
-    },
-    'adrianoreidel': {
-        'algoritmo': 'Dado o nome "maicol" retorne a sua característica mais marcante...',
-        'resposta_correta': 'careca',
-    },
-}
-
-@bot.command()
-async def iniciar_desafio(ctx, nome: str):
-    """
-    !iniciar_desafio nome_do_usuário_do_discord
-    """
-
-    user_id = ctx.author.id
-    user_name = ctx.author.name
-    
-    member_names = {
-                'marcusnascimento': 'Marquinhos',
-                'michelmachado': 'Michas',
-                'fabricio_05': 'Fafa',
-                'kevinbrissow': 'Kevinnn',
-                'arturmeneghini': 'Arturo',
-                'adrianoreidel': 'Adriano rei delas',
-            }
-    if nome in member_names:
-        try:
-            user = await bot.fetch_user(user_id)
-            if user:
-                if nome == 'marcusnascimento':
-                    await user.send("Crie um algoritmo que dada a entrada “AdrianoArturAugustoKevinMichelMarcusFabricioSamuel” como string, retorne o tamanho da string, subtraído pelo número de vogais.")
-                elif nome == 'michelmachado':
-                    await user.send("Faça um algoritmo que troque as letras dessa string “gespamlindo” pela respectiva posição do alfabeto, ex (a = 1, b = 2, c = 3, d = 4…….).")
-                elif nome == 'fabricio_05':
-                    await user.send("Faça um algoritmo que troque o números dessa string, “13 9 3 8 5 12 7 1 20 1 15”, pelas letras correspondentes por cada posição no alfabeto, remova os espaços em branco para a resposta final.")
-                elif nome == 'kevinbrissow':
-                    await user.send("Faça um algoritmo que, dado o nome dos 8 integrantes do Tecnouri, calcule o número secreto. Para descobrir o número secreto basta somar 46 se o nome termina com vogal, caso contrário some 34.")
-                elif nome == 'arturmeneghini':
-                    await user.send("Crie um algoritmo que dado o nomes dos 8 integrantes do Tecnouri, retorne o menor nome e o maior, desssa forma “nomemenor/nomemaior”, se o resultado não for único de um dos dois nomes não for único, a pessoa com ordem alfabética prevalece para a resposta (tudo minúsculo os nomes e em acento)")
-                elif nome == 'adrianoreidel':
-                    await user.send("Dado o nome 'maicol' retorne a sua característica mais marcante...")
-                await ctx.send(f"Desafio iniciado para {member_names[nome]}. Verifique sua DM para o algoritmo.")
-        except Exception as e:
-            await ctx.send(f"Erro ao iniciar o desafio: {e}")
-    else:
-        await ctx.send("Nome de usuário não reconhecido. Certifique-se de usar um nome válido.")
-
-@bot.command()
-async def inserir_resposta(ctx, resposta: str):
-    """
-    !inserir_resposta resposta
-    """
-    user_id = ctx.author.id
-    user_name = ctx.author.name
-    user = await bot.fetch_user(user_id)
-    if user_name in algoritmos_respostas:
-        algoritmo_usuario = algoritmos_respostas[user_name]['algoritmo']
-        resposta_correta = algoritmos_respostas[user_name]['resposta_correta']
-        
-        if resposta == resposta_correta:
-            await user.send("Resposta correta! Você desbloqueou algo:")
-            if (user_name == 'marcusnascimento'):
-                await user.send("1- https:")
-            elif user_name == 'michelmachado':
-                await user.send("2- //qrco")
-            elif user_name == 'fabricio_05':
-                await user.send("3- .de")
-            elif user_name == 'kevinbrissow':
-                await user.send("4- /be")
-            elif user_name == 'arturmeneghini':
-                await user.send("5- L")
-            elif user_name == 'adrianoreidel':
-                await user.send("6- 52d")
-        else:
-            await user.send("Resposta incorreta. Tente novamente.")
-    else:
-        await ctx.send("Usuário não encontrado na lista de membros com algoritmos/respostas.")
 
 #DELETA MSG'S QUE NÃO SÃO COMANDOS
 @bot.event
