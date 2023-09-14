@@ -259,7 +259,7 @@ async def run_bot():
         current_hour = now_local.hour
         current_minute = now_local.minute
 
-        if current_day in [0, 1, 2, 3, 4] and current_hour == 8 and current_minute == 30:
+        if current_day in [0, 1, 2, 3, 4] and current_hour == 7 and current_minute == 40:
                         number_member = await generate_number()
                         if number_member in member_names:
                             member_coffe = member_names[number_member]
