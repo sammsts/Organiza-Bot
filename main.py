@@ -259,14 +259,14 @@ async def run_bot():
         current_hour = now_local.hour
         current_minute = now_local.minute
 
-        if current_day in [0, 1, 2, 3, 4] and current_hour == 7 and current_minute == 40:
+        if ((current_day in [0, 1, 2, 3, 4]) and (current_hour == 7 and current_minute == 56 | current_hour == 14 and current_minute == 30)):
                         number_member = await generate_number()
                         if number_member in member_names:
                             member_coffe = member_names[number_member]
                             message = f"Parabéns {member_coffe}, você foi o premiado da vez para fazer o *café*, vai lá."
                             await send_message(1151195420761014333, message)
 
-        if current_day in [0, 2, 4] and current_hour == 9 and current_minute == 30:
+        if current_day in [0, 2, 4] and current_hour == 13 and current_minute == 51:
             number_member = await generate_number()
             number_task1 = await generate_number_task()
             number_task2 = await generate_number_task()
