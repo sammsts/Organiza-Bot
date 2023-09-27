@@ -147,19 +147,32 @@ async def check_lembretes():
 
 #SORTEIO---------------------------------------
 #members
+numbers_generated = set()
+current_week = datetime.now().isocalendar()[1]
+
 async def generate_number():
-    global numbers_generated
+    global numbers_generated, current_week
     number = random.randint(1, 8)
     
-    #Verifica se o número já foi gerado nesta semana
-    while number in numbers_generated:
-        number = random.randint(1, 8)
+    # Verifica se a semana mudou
+    if datetime.now().isocalendar()[1] != current_week:
+        numbers_generated = set()
+        current_week = datetime.now().isocalendar()[1]
     
-    numbers_generated.add(number)
+    number = random.randint(1, 8)
     
     if len(numbers_generated) == 4:
         numbers_generated = set()
     
+    # Verifica se o número já foi gerado nesta semana
+    while number in numbers_generated:
+        number = random.randint(1, 8)
+
+    numbers_generated.add(number)
+
+    if len(numbers_generated) == 5:
+        numbers_generated = set()
+
     return number
 
 #tasks
