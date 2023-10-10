@@ -147,7 +147,7 @@ async def sorteio_task(ctx):
             task2 = member_tasks[number_task2]
             message = f"Parabéns {member}, você foi o premiado da vez. Sua tarefa é *{task1}* e *{task2}*, vai lá."
             try:
-                await send_message(1115650913420464151, message)
+                await send_message(1151195420761014333, message)
             except Exception as e:
                 print(f"Erro ao enviar mensagem: {e}")
 
@@ -174,7 +174,7 @@ async def sorteio_cafe(ctx):
     if number_member in member_names:
         member_coffe = member_names[number_member]
         message = f"Parabéns {member_coffe}, você foi o premiado da vez para fazer o *café*, vai lá."
-        await send_message(1115650913420464151, message)
+        await send_message(1151195420761014333, message)
 
 #Enviar mensagem---------------------------------
 async def send_message(channel_id, message):
@@ -184,28 +184,6 @@ async def send_message(channel_id, message):
         print("Mensagem enviada")
     else:
         print("Canal não encontrado")
-
-#DELETA MSG'S QUE NÃO SÃO COMANDOS
-@bot.event
-async def on_message(message):
-    #Verifica se a mensagem não é do próprio bot
-    if message.author.bot:
-        return
-    
-    allowed_commands = ["lembrete", "iniciar_desafio", "inserir_resposta"]
-    command_prefix = "!"
-
-    for command in allowed_commands:
-        if message.content.startswith(f"{command_prefix}{command}"):
-            break
-    else:
-        channel_id = 1115650913420464151
-        if message.channel.id != channel_id:
-            return
-        
-        await message.delete()
-
-    await bot.process_commands(message)
 
 #DELETA AS MENSAGENS
 @bot.command()
@@ -230,25 +208,6 @@ async def on_ready():
     await run_bot()
 
 async def run_bot():
-    member_names = {
-        1: 'Samuel',
-        2: 'Augusto',
-        3: 'Fabricio',
-        4: 'Kevin',
-        5: 'Artur',
-        6: 'Adriano',
-        7: 'Michel',
-        8: 'Marcus',
-        9: 'Cesario',
-        10: 'Thiago',
-        11: 'Paulo'
-    }
-    member_tasks = {
-        1: 'tirar os lixos',
-        2: 'limpar sua mesa',
-        3: 'encher o galão de água'
-    }
-
     while True:
         now_utc = datetime.utcnow()
         local_tz = pytz.timezone('Brazil/East')
@@ -258,30 +217,11 @@ async def run_bot():
         current_hour = now_local.hour
         current_minute = now_local.minute
 
-        if ((current_day in [0, 1, 2, 3, 4]) and (current_hour == 7 and current_minute == 40 or current_hour == 8 and current_minute == 15)):
-            number_member = await generate_number()
-            if number_member in member_names:
-                member_coffe = member_names[number_member]
-                message = f"Parabéns {member_coffe}, você foi o premiado da vez para fazer o *café*, vai lá."
-                await send_message(1115650913420464151, message)
+        if ((current_day in [0, 1, 2, 3, 4]) and (current_hour == 7 and current_minute == 40 or current_hour == 15 and current_minute == 11)):
+            await sorteio_cafe('')
 
         if current_day in [0, 2, 4] and current_hour == 7 and current_minute == 45:
-            number_member = await generate_number()
-            number_task1 = await generate_number_task()
-            number_task2 = await generate_number_task()
-            print(f"Generated number member: {number_member}")
-            print(f"Generated number member: {number_task1} e {number_task2}")
-
-            if number_member in member_names:
-                if number_task1 in member_tasks and number_task2 in member_tasks:
-                    member = member_names[number_member]
-                    task1 = member_tasks[number_task1]
-                    task2 = member_tasks[number_task2]
-                    message = f"Parabéns {member}, você foi o premiado da vez. Sua tarefa é *{task1}* e *{task2}*, vai lá."
-                    try:
-                        await send_message(1115650913420464151, message)
-                    except Exception as e:
-                        print(f"Erro ao enviar mensagem: {e}")
+            await sorteio_task('')
         await asyncio.sleep(60)
 
 token = config('DISCORD_TOKEN')
