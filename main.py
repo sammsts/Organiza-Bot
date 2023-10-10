@@ -2,114 +2,33 @@ import discord
 import random
 import asyncio
 import pytz
-from datetime import datetime, timedelta
+from datetime import datetime
 from discord.ext import commands, tasks
 from decouple import config
+from dotenv import load_dotenv
+#TENTATIVA DE INTEGRAR COM O OUTLOOK
+# from rich import console
+# from ms_graph import generate_access_token, GRAPH_API_ENDPOINT
+# from msal import ConfidentialClientApplication, PublicClientApplication
+# import os
+# import ast
+# import requests
 
+load_dotenv()
+
+#Token Outlook
+# console = console.Console()
+# client_id = os.getenv("CLIENT_ID")
+# client_secret = os.getenv("CLIENT_SECRET")
+# authority = os.getenv("AUTHORITY")
+# scopes = os.getenv("SCOPES")
+# scopes = ast.literal_eval(scopes)
+
+#Comandos discord
 intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
-
-# #ALGORITMO---------------------------------------
-# #dicionário
-# algoritmos_respostas = {
-#     'marcusnascimento': {
-#         'algoritmo': 'Crie um algoritmo que dada a entrada “AdrianoArturAugustoKevinMichelMarcusFabricioSamuel” como string, retorne o tamanho da string, subtraído pelo número de vogais.',
-#         'resposta_correta': '27',
-#     },
-#     'michelmachado': {
-#         'algoritmo': ' Faça um algoritmo que troque as letras dessa string “gespamlindo” pela respectiva posição do alfabeto, ex (a = 1, b = 2, c = 3, d = 4…….).',
-#         'resposta_correta': '75191611312914415',
-#     },
-#     'fabricio_05': {
-#         'algoritmo': 'Faça um algoritmo que troque o números dessa string, “13 9 3 8 5 12 7 1 20 1 15”, pelas letras correspondentes por cada posição no alfabeto, remova os espaços em branco para a resposta final.',
-#         'resposta_correta': 'michelgatao',
-#     },
-#     'kevinbrissow': {
-#         'algoritmo': 'Faça um algoritmo que, dado o nome dos 8 integrantes do Tecnouri, calcule o número secreto. Para descobrir o número secreto basta somar 46 se o nome termina com vogal, caso contrário some 34.',
-#         'resposta_correta': '308',
-#     },
-#     'arturmeneghini': {
-#         'algoritmo': 'Crie um algoritmo que dado o nomes dos 8 integrantes do Tecnouri, retorne o menor nome e o maior, desssa forma “nomemenor/nomemaior”, se o resultado não for único de um dos dois nomes não for único, a pessoa com ordem alfabética prevalece para a resposta (tudo minúsculo os nomes e em acento)',
-#         'resposta_correta': 'artur/fabricio',
-#     },
-#     'adrianoreidel': {
-#         'algoritmo': 'Dado o nome "maicol" retorne a sua característica mais marcante...',
-#         'resposta_correta': 'careca',
-#     },
-# }
-
-# @bot.command()
-# async def iniciar_desafio(ctx, nome: str):
-#     """
-#     !iniciar_desafio nome_do_usuário_do_discord
-#     """
-
-#     user_id = ctx.author.id
-#     user_name = ctx.author.name
-    
-#     member_names = {
-#                 'marcusnascimento': 'Marquinhos',
-#                 'michelmachado': 'Michas',
-#                 'fabricio_05': 'Fafa',
-#                 'kevinbrissow': 'Kevinnn',
-#                 'arturmeneghini': 'Arturo',
-#                 'adrianoreidel': 'Adriano rei delas',
-#             }
-#     if nome in member_names:
-#         try:
-#             user = await bot.fetch_user(user_id)
-#             if user:
-#                 if nome == 'marcusnascimento':
-#                     await user.send("Crie um algoritmo que dada a entrada “AdrianoArturAugustoKevinMichelMarcusFabricioSamuel” como string, retorne o tamanho da string, subtraído pelo número de vogais.")
-#                 elif nome == 'michelmachado':
-#                     await user.send("Faça um algoritmo que troque as letras dessa string “gespamlindo” pela respectiva posição do alfabeto, ex (a = 1, b = 2, c = 3, d = 4…….).")
-#                 elif nome == 'fabricio_05':
-#                     await user.send("Faça um algoritmo que troque o números dessa string, “13 9 3 8 5 12 7 1 20 1 15”, pelas letras correspondentes por cada posição no alfabeto, remova os espaços em branco para a resposta final.")
-#                 elif nome == 'kevinbrissow':
-#                     await user.send("Faça um algoritmo que, dado o nome dos 8 integrantes do Tecnouri, calcule o número secreto. Para descobrir o número secreto basta somar 46 se o nome termina com vogal, caso contrário some 34.")
-#                 elif nome == 'arturmeneghini':
-#                     await user.send("Crie um algoritmo que dado o nomes dos 8 integrantes do Tecnouri, retorne o menor nome e o maior, desssa forma “nomemenor/nomemaior”, se o resultado não for único de um dos dois nomes não for único, a pessoa com ordem alfabética prevalece para a resposta (tudo minúsculo os nomes e em acento)")
-#                 elif nome == 'adrianoreidel':
-#                     await user.send("Dado o nome 'maicol' retorne a sua característica mais marcante...")
-#                 await ctx.send(f"Desafio iniciado para {member_names[nome]}. Verifique sua DM para o algoritmo.")
-#         except Exception as e:
-#             await ctx.send(f"Erro ao iniciar o desafio: {e}")
-#     else:
-#         await ctx.send("Nome de usuário não reconhecido. Certifique-se de usar um nome válido.")
-
-# @bot.command()
-# async def inserir_resposta(ctx, resposta: str):
-#     """
-#     !inserir_resposta resposta
-#     """
-#     user_id = ctx.author.id
-#     user_name = ctx.author.name
-#     user = await bot.fetch_user(user_id)
-#     if user_name in algoritmos_respostas:
-#         algoritmo_usuario = algoritmos_respostas[user_name]['algoritmo']
-#         resposta_correta = algoritmos_respostas[user_name]['resposta_correta']
-        
-#         if resposta == resposta_correta:
-#             await user.send("Resposta correta! Você desbloqueou algo:")
-#             if (user_name == 'marcusnascimento'):
-#                 await user.send("1- https:")
-#             elif user_name == 'michelmachado':
-#                 await user.send("2- //qrco")
-#             elif user_name == 'fabricio_05':
-#                 await user.send("3- .de")
-#             elif user_name == 'kevinbrissow':
-#                 await user.send("4- /be")
-#             elif user_name == 'arturmeneghini':
-#                 await user.send("5- L")
-#             elif user_name == 'adrianoreidel':
-#                 await user.send("6- 52d")
-#         else:
-#             await user.send("Resposta incorreta. Tente novamente.")
-#     else:
-#         await ctx.send("Usuário não encontrado na lista de membros com algoritmos/respostas.")
-
 
 #LEMBRETES---------------------------------------
 lembretes = []
@@ -118,7 +37,7 @@ numbers_generated = set()
 @bot.command()
 async def lembrete(ctx, data, hora, evento):
     """
-    !lembrete dd/mm/aaaa 00:00 evento
+    !agendar_evento evento
     """
     try:
         dia, mes, ano = map(int, data.split('/'))
@@ -152,25 +71,25 @@ current_week = datetime.now().isocalendar()[1]
 
 async def generate_number():
     global numbers_generated, current_week
-    number = random.randint(1, 8)
+    number = random.randint(1, 11)
     
-    # Verifica se a semana mudou
+    #Verifica se a semana mudou
     if datetime.now().isocalendar()[1] != current_week:
         numbers_generated = set()
         current_week = datetime.now().isocalendar()[1]
     
-    number = random.randint(1, 8)
+    number = random.randint(1, 11)
     
-    if len(numbers_generated) == 4:
+    if len(numbers_generated) == 11:
         numbers_generated = set()
     
-    # Verifica se o número já foi gerado nesta semana
+    #Verifica se o número já foi gerado nesta semana
     while number in numbers_generated:
-        number = random.randint(1, 8)
-
+        number = random.randint(1, 11)
+    
     numbers_generated.add(number)
 
-    if len(numbers_generated) == 5:
+    if len(numbers_generated) == 11:
         numbers_generated = set()
 
     return number
@@ -191,6 +110,72 @@ async def generate_number_task():
     
     return number
 
+@bot.command()
+async def sorteio_task(ctx):
+    """
+    !sorteio_task
+    """
+    member_names = {
+        1: 'Samuel',
+        2: 'Augusto',
+        3: 'Fabricio',
+        4: 'Kevin',
+        5: 'Artur',
+        6: 'Adriano',
+        7: 'Michel',
+        8: 'Marcus',
+        9: 'Cesario',
+        10: 'Thiago',
+        11: 'Paulo'
+    }
+    member_tasks = {
+        1: 'tirar os lixos',
+        2: 'limpar sua mesa',
+        3: 'encher o galão de água'
+    }
+
+    number_member = await generate_number()
+    number_task1 = await generate_number_task()
+    number_task2 = await generate_number_task()
+    print(f"Generated number member: {number_member}")
+    print(f"Generated number member: {number_task1} e {number_task2}")
+
+    if number_member in member_names:
+        if number_task1 in member_tasks and number_task2 in member_tasks:
+            member = member_names[number_member]
+            task1 = member_tasks[number_task1]
+            task2 = member_tasks[number_task2]
+            message = f"Parabéns {member}, você foi o premiado da vez. Sua tarefa é *{task1}* e *{task2}*, vai lá."
+            try:
+                await send_message(1115650913420464151, message)
+            except Exception as e:
+                print(f"Erro ao enviar mensagem: {e}")
+
+@bot.command()
+async def sorteio_cafe(ctx):
+    """
+    !sorteio_cafe
+    """
+    member_names = {
+        1: 'Samuel',
+        2: 'Augusto',
+        3: 'Fabricio',
+        4: 'Kevin',
+        5: 'Artur',
+        6: 'Adriano',
+        7: 'Michel',
+        8: 'Marcus',
+        9: 'Cesario',
+        10: 'Thiago',
+        11: 'Paulo'
+    }
+
+    number_member = await generate_number()
+    if number_member in member_names:
+        member_coffe = member_names[number_member]
+        message = f"Parabéns {member_coffe}, você foi o premiado da vez para fazer o *café*, vai lá."
+        await send_message(1115650913420464151, message)
+
 #Enviar mensagem---------------------------------
 async def send_message(channel_id, message):
     channel = bot.get_channel(channel_id)
@@ -203,7 +188,7 @@ async def send_message(channel_id, message):
 #DELETA MSG'S QUE NÃO SÃO COMANDOS
 @bot.event
 async def on_message(message):
-    # Verifica se a mensagem não é do próprio bot
+    #Verifica se a mensagem não é do próprio bot
     if message.author.bot:
         return
     
@@ -214,7 +199,7 @@ async def on_message(message):
         if message.content.startswith(f"{command_prefix}{command}"):
             break
     else:
-        channel_id = 1151195420761014333
+        channel_id = 1115650913420464151
         if message.channel.id != channel_id:
             return
         
@@ -234,7 +219,6 @@ async def clear(ctx):
             except Exception as e:
                 print(f"Erro ao excluir mensagem: {e}")
 
-        # Envia uma mensagem confirmando a limpeza
         await ctx.send("Chat limpo com sucesso!")
     else:
         await ctx.send("Você não tem permissão para usar este comando.")
@@ -243,7 +227,6 @@ async def clear(ctx):
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    check_lembretes.start()
     await run_bot()
 
 async def run_bot():
@@ -255,7 +238,10 @@ async def run_bot():
         5: 'Artur',
         6: 'Adriano',
         7: 'Michel',
-        8: 'Marcus'
+        8: 'Marcus',
+        9: 'Cesario',
+        10: 'Thiago',
+        11: 'Paulo'
     }
     member_tasks = {
         1: 'tirar os lixos',
@@ -272,14 +258,14 @@ async def run_bot():
         current_hour = now_local.hour
         current_minute = now_local.minute
 
-        if ((current_day in [0, 1, 2, 3, 4]) and (current_hour == 7 and current_minute == 40 or current_hour == 13 and current_minute == 30)):
-                        number_member = await generate_number()
-                        if number_member in member_names:
-                            member_coffe = member_names[number_member]
-                            message = f"Parabéns {member_coffe}, você foi o premiado da vez para fazer o *café*, vai lá."
-                            await send_message(1151195420761014333, message)
+        if ((current_day in [0, 1, 2, 3, 4]) and (current_hour == 7 and current_minute == 40 or current_hour == 8 and current_minute == 15)):
+            number_member = await generate_number()
+            if number_member in member_names:
+                member_coffe = member_names[number_member]
+                message = f"Parabéns {member_coffe}, você foi o premiado da vez para fazer o *café*, vai lá."
+                await send_message(1115650913420464151, message)
 
-        if current_day in [0, 2, 3] and current_hour == 8 and current_minute == 00:
+        if current_day in [0, 2, 4] and current_hour == 7 and current_minute == 45:
             number_member = await generate_number()
             number_task1 = await generate_number_task()
             number_task2 = await generate_number_task()
@@ -293,10 +279,10 @@ async def run_bot():
                     task2 = member_tasks[number_task2]
                     message = f"Parabéns {member}, você foi o premiado da vez. Sua tarefa é *{task1}* e *{task2}*, vai lá."
                     try:
-                        await send_message(1151195420761014333, message)
+                        await send_message(1115650913420464151, message)
                     except Exception as e:
                         print(f"Erro ao enviar mensagem: {e}")
         await asyncio.sleep(60)
-token = config('DISCORD_TOKEN')
 
+token = config('DISCORD_TOKEN')
 bot.run(token)
